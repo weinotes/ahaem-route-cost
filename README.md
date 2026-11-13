@@ -8,6 +8,8 @@ Pages after the next deployment:
 
 - English: <https://weinotes.github.io/ahaem-route-cost/>
 - Simplified Chinese: <https://weinotes.github.io/ahaem-route-cost/zh-CN/>
+- Vercel English: <https://ahaem-route-cost.vercel.app/>
+- Vercel Simplified Chinese: <https://ahaem-route-cost.vercel.app/zh-CN/>
 
 The tool is built by AHAEM and links to two relevant next steps:
 
@@ -84,6 +86,15 @@ npm run deploy:pages
 ```
 
 Additional pinned GitHub Actions templates remain under `docs/automation/`.
+
+The GitHub repository is also connected to Vercel. Production builds use:
+
+```text
+Build command: npm run build
+Output directory: dist
+Node.js: 24.x
+SITE_URL: https://ahaem-route-cost.vercel.app/
+```
 
 ## Structure
 
