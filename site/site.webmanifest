@@ -1,0 +1,16 @@
+{
+  "name": "AHAEM Transfer Cost Calculator",
+  "short_name": "Route Cost",
+  "description": "See the true fixed and percentage cost of moving crypto.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f2f0e8",
+  "theme_color": "#f2f0e8",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

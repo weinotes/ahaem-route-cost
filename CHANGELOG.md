@@ -1,0 +1,14 @@
+# Changelog
+
+All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and
+the project uses [Semantic Versioning](https://semver.org/).
+
+## [0.1.0] - 2026-11-14
+
+### Added
+
+- exact fixed and percentage transfer-cost calculation;
+- responsive, accessible single-page interface;
+- unit tests, build validation and branch-based GitHub Pages deployment;
+- contextual links to AHAEM and CEXAH;
+- backlink distribution plan and prospect tracker.

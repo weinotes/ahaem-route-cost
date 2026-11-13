@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crypto Transfer Cost Calculator | AHAEM Open Tools</title>
+    <meta
+      name="description"
+      content="Estimate fixed and percentage fees, net received amount and the effective cost of moving crypto. Free, private and open source."
+    >
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#f2f0e8">
+    <link rel="canonical" href="__SITE_URL__">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="stylesheet" href="./styles.css">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AHAEM Open Tools">
+    <meta property="og:title" content="Crypto Transfer Cost Calculator">
+    <meta
+      property="og:description"
+      content="See what actually arrives after fixed fees, percentage fees and route costs."
+    >
+    <meta property="og:url" content="__SITE_URL__">
+    <meta property="og:image" content="__SITE_URL__og-cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "AHAEM",
+            "url": "https://www.ahaem.com/",
+            "sameAs": [
+              "https://x.com/daveywongpro",
+              "https://t.me/daveywongpro"
+            ]
+          },
+          {
+            "@type": "WebApplication",
+            "name": "Crypto Transfer Cost Calculator",
+            "url": "__SITE_URL__",
+            "description": "An open-source calculator for fixed, percentage and effective crypto transfer costs.",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "isAccessibleForFree": true,
+            "browserRequirements": "Requires JavaScript",
+            "publisher": {
+              "@type": "Organization",
+              "name": "AHAEM",
+              "url": "https://www.ahaem.com/"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#calculator">Skip to calculator</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="AHAEM Open Tools home">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>
+          <strong>AHAEM Open Tools</strong>
+          <small>Free calculators with visible assumptions</small>
+        </span>
+      </a>
+      <a
+        class="header-link"
+        href="https://www.ahaem.com/tools/route-cost/"
+        referrerpolicy="origin"
+      >
+        Full route planner <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Transfer cost / open source / no account</p>
+          <h1>Know what arrives before you send.</h1>
+          <p class="lede">
+            Add fixed fees and percentage costs to see the real amount received.
+            Every calculation runs in your browser.
+          </p>
+          <ul class="trust-list" aria-label="Tool principles">
+            <li>No wallet connection</li>
+            <li>No cookies or tracking</li>
+            <li>Apache-2.0 source</li>
+          </ul>
+          <div class="preset-row" aria-label="Example scenarios">
+            <span>Try an example:</span>
+            <button type="button" data-preset="exchange">CEX withdrawal</button>
+            <button type="button" data-preset="bridge">Bridge route</button>
+          </div>
+        </div>
+
+        <section class="calculator-card" id="calculator" aria-labelledby="calculator-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Estimate</p>
+              <h2 id="calculator-title">Transfer cost</h2>
+            </div>
+            <output class="cost-badge" id="effective-cost" aria-live="polite">0%</output>
+          </div>
+
+          <form id="route-cost-form">
+            <div class="amount-row">
+              <label class="field field--amount">
+                <span>Amount to send</span>
+                <input
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="0.00000001"
+                  value="1000"
+                  required
+                >
+              </label>
+              <label class="field field--unit">
+                <span>Asset / unit</span>
+                <input
+                  id="asset-unit"
+                  name="asset-unit"
+                  type="text"
+                  maxlength="12"
+                  value="USDT"
+                  autocomplete="off"
+                >
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>Fixed fees</legend>
+              <p class="group-help">Charged in the same unit as the amount.</p>
+              <div class="field-grid">
+                <label class="field">
+                  <span>Withdrawal</span>
+                  <input id="fixed-withdrawal" type="number" inputmode="decimal" min="0" step="0.00000001" value="1">
+                </label>
+                <label class="field">
+                  <span>Network</span>
+                  <input id="fixed-network" type="number" inputmode="decimal" min="0" step="0.00000001" value="0.5">
+                </label>
+                <label class="field">
+                  <span>Other fixed</span>
+                  <input id="fixed-other" type="number" inputmode="decimal" min="0" step="0.00000001" value="0">
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Percentage costs</legend>
+              <p class="group-help">Each percentage is applied to the amount sent.</p>
+              <div class="field-grid">
+                <label class="field">
+                  <span>Platform fee</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-platform" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0.1">
+                    <b>%</b>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>Conversion</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-conversion" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0">
+                    <b>%</b>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>Route / slippage</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-route" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0.2">
+                    <b>%</b>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button class="button button--primary" type="submit">Calculate transfer</button>
+          </form>
+        </section>
+      </section>
+
+      <section class="result-band" id="result" aria-labelledby="result-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modeled outcome</p>
+            <h2 id="result-title">The destination receives</h2>
+          </div>
+          <button class="button button--quiet" id="copy-summary" type="button">Copy result</button>
+        </div>
+        <div class="result-grid">
+          <article class="result-primary">
+            <span>Net received</span>
+            <strong id="net-received" aria-live="polite">0 USDT</strong>
+            <p>Amount sent minus fixed and percentage fees.</p>
+          </article>
+          <article>
+            <span>Total cost</span>
+            <strong id="total-cost">0 USDT</strong>
+          </article>
+          <article>
+            <span>Cost per 1,000 sent</span>
+            <strong id="cost-per-thousand">0 USDT</strong>
+          </article>
+        </div>
+        <div class="breakdown" aria-label="Cost breakdown">
+          <div><span>Fixed fees</span><strong id="fixed-breakdown">0 USDT</strong></div>
+          <div><span>Percentage fees</span><strong id="percentage-breakdown">0 USDT</strong></div>
+        </div>
+      </section>
+
+      <section class="explain">
+        <div>
+          <p class="eyebrow">Method</p>
+          <h2>A simple model with stated limits.</h2>
+        </div>
+        <div class="explain-copy">
+          <p>
+            Fixed fees are subtracted once. Percentage costs are calculated from
+            the original amount and use exact integer arithmetic rather than
+            floating-point currency math.
+          </p>
+          <div class="formula" aria-label="Calculation formula">
+            <span>Net received</span>
+            <code>amount − fixed fees − amount × percentage fees</code>
+          </div>
+          <details>
+            <summary>What this calculator does not model</summary>
+            <ul>
+              <li>Taxes, price movement, staking yield or investment return.</li>
+              <li>Fees charged in a different asset than the amount sent.</li>
+              <li>Minimum withdrawals, network congestion or counterparty risk.</li>
+              <li>Whether a specific region or account can use a route.</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="next-step">
+        <div>
+          <p class="eyebrow">Need more than one transfer?</p>
+          <h2>Move from estimate to route decision.</h2>
+          <p>
+            A single calculator cannot show network availability, wallet
+            constraints or exchange-specific rules. Use the full service when the
+            route affects where your funds end up.
+          </p>
+        </div>
+        <div class="next-links">
+          <a href="https://www.ahaem.com/tools/route-cost/" referrerpolicy="origin">
+            <span>Compare complete routes</span>
+            <strong>AHAEM route planner <b aria-hidden="true">↗</b></strong>
+            <small>Fees, networks, wallets and missing-data states.</small>
+          </a>
+          <a href="https://www.cexah.com/tools/trading-cost-comparison" referrerpolicy="origin">
+            <span>Research exchange costs</span>
+            <strong>CEXAH trading cost comparison <b aria-hidden="true">↗</b></strong>
+            <small>Exchange fees, derivatives and trading-cost research.</small>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Built by <a href="https://www.ahaem.com/" referrerpolicy="origin">AHAEM</a>
+        as an open-source public tool. The calculator contains no affiliate links
+        and sends no entered values to a server.
+      </p>
+      <p>
+        <a href="https://github.com/weinotes/ahaem-route-cost">Source code</a>
+        · Apache-2.0 · Updated <time datetime="2026-11-14">14 November 2026</time>
+      </p>
+    </footer>
+
+    <noscript>
+      <p class="noscript">This calculator requires JavaScript. No inputs are transmitted.</p>
+    </noscript>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

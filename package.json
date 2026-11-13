@@ -1,0 +1,27 @@
+{
+  "name": "ahaem-route-cost",
+  "version": "0.1.0",
+  "description": "An open-source calculator for the true fixed and percentage cost of moving crypto.",
+  "private": false,
+  "license": "Apache-2.0",
+  "type": "module",
+  "homepage": "https://weinotes.github.io/ahaem-route-cost/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weinotes/ahaem-route-cost.git"
+  },
+  "bugs": {
+    "url": "https://github.com/weinotes/ahaem-route-cost/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "test": "node --test",
+    "validate": "node scripts/validate.mjs",
+    "check": "npm test && npm run build && npm run validate",
+    "deploy:pages": "npm run check && node scripts/publish-pages.mjs"
+  }
+}

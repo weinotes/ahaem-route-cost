@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f2f0e8"/>
+  <circle cx="1040" cy="72" r="210" fill="#d8f06a"/>
+  <path d="M0 520 1200 320v310H0Z" fill="#171b14"/>
+  <rect x="72" y="64" width="56" height="56" rx="15" fill="#171b14"/>
+  <path d="M85 103 98 73h7l13 30h-8l-2-6h-13l-2 6Zm13-13h5l-2.5-7Z" fill="#d8f06a"/>
+  <circle cx="120" cy="73" r="6" fill="#ff5a1f"/>
+  <text x="148" y="102" fill="#171b14" font-family="Arial, sans-serif" font-size="25" font-weight="700">AHAEM OPEN TOOLS</text>
+  <text x="72" y="244" fill="#171b14" font-family="Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="-3">Know what arrives</text>
+  <text x="72" y="326" fill="#171b14" font-family="Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="-3">before you send.</text>
+  <text x="76" y="386" fill="#60685b" font-family="Arial, sans-serif" font-size="28">Open-source crypto transfer cost calculator</text>
+  <text x="76" y="566" fill="#f3f2e9" font-family="Arial, sans-serif" font-size="24">No account · No wallet connection · Runs in your browser</text>
+</svg>

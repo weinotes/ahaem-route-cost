@@ -1,0 +1,35 @@
+{
+  "profile_version": 1,
+  "site_name": "AHAEM Open Tools",
+  "base_url": "https://weinotes.github.io/ahaem-route-cost/",
+  "environment": "production",
+  "owner": "AHAEM",
+  "site_types": ["directory_comparison", "programmatic_data"],
+  "sitemap": "/sitemap.xml",
+  "robots": "/robots.txt",
+  "default_locale": "en",
+  "locales": ["en"],
+  "max_urls": 10,
+  "hreflang": {
+    "enabled": false,
+    "require_x_default": false
+  },
+  "ignore_url_regex": [],
+  "page_rules": [
+    {
+      "name": "transfer_cost_calculator",
+      "regex": ["^/ahaem-route-cost/$"],
+      "indexable": true,
+      "schema_any": ["WebApplication"],
+      "min_visible_words": 180,
+      "require_h1": 1,
+      "require_description": true
+    }
+  ],
+  "probe_urls": [],
+  "quality_gates": {
+    "require_source_dates": [],
+    "require_author": [],
+    "allow_faq_schema_only_with_visible_faq": true
+  }
+}
