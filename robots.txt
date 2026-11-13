@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://weinotes.github.io/ahaem-route-cost/sitemap.xml
