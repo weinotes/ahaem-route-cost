@@ -10,8 +10,8 @@ Pages after the next deployment:
 - Simplified Chinese: <https://weinotes.github.io/ahaem-route-cost/zh-CN/>
 - Vercel English: <https://ahaem-route-cost.vercel.app/>
 - Vercel Simplified Chinese: <https://ahaem-route-cost.vercel.app/zh-CN/>
-- GitLab English: <https://wgwcko.gitlab.io/ahaem-route-cost/>
-- GitLab Simplified Chinese: <https://wgwcko.gitlab.io/ahaem-route-cost/zh-CN/>
+- GitLab English: <https://guangweipro.gitlab.io/ahaem-route-cost/>
+- GitLab Simplified Chinese: <https://guangweipro.gitlab.io/ahaem-route-cost/zh-CN/>
 
 The tool is built by AHAEM and links to two relevant next steps:
 
