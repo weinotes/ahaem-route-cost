@@ -4,6 +4,55 @@ import {
   formatUnits,
 } from "./calculator.js";
 
+const locale = document.documentElement.lang.toLowerCase().startsWith("zh")
+  ? "zh-CN"
+  : "en";
+const uiText = {
+  en: {
+    assetUnitsFallback: "asset units",
+    insufficientFunds:
+      "Modeled fees meet or exceed the amount. Check the inputs or route.",
+    summaryLabels: {
+      amount: "Transfer amount",
+      net: "Net received",
+      total: "Total modeled cost",
+      effective: "Effective cost",
+      perThousand: "Cost per 1,000",
+    },
+    fixInputsFirst: "Fix inputs first",
+    copied: "Copied",
+    copyResult: "Copy result",
+    copyUnavailable: "Copy unavailable",
+    calculationFailed: "Unable to calculate. Check the inputs.",
+  },
+  "zh-CN": {
+    assetUnitsFallback: "资产单位",
+    insufficientFunds: "模拟费用已达到或超过转出金额，请检查输入或路线。",
+    summaryLabels: {
+      amount: "转出金额",
+      net: "净到账",
+      total: "总模拟成本",
+      effective: "有效成本",
+      perThousand: "每转出 1,000 单位的成本",
+    },
+    fixInputsFirst: "请先修正输入",
+    copied: "已复制",
+    copyResult: "复制结果",
+    copyUnavailable: "当前无法复制",
+    calculationFailed: "无法完成计算，请检查输入。",
+  },
+};
+const text = uiText[locale];
+const localizedFields = {
+  Amount: "金额",
+  "Withdrawal fee": "提现费",
+  "Network fee": "网络费",
+  "Other fixed fee": "其他固定费用",
+  "Platform fee": "平台费",
+  "Conversion fee": "兑换费",
+  "Route or slippage cost": "路线或滑点成本",
+};
+
 const form = document.querySelector("#route-cost-form");
 const error = document.querySelector("#form-error");
 const result = document.querySelector("#result");
@@ -60,7 +109,27 @@ function setInputValue(id, value) {
 }
 
 function displayUnit() {
-  return unitInput.value.trim().slice(0, 12) || "asset units";
+  return unitInput.value.trim().slice(0, 12) || text.assetUnitsFallback;
+}
+
+function localizedErrorMessage(error) {
+  if (locale !== "zh-CN" || !error?.code) {
+    return error?.message || text.calculationFailed;
+  }
+
+  const field = localizedFields[error.field] || "输入项";
+  switch (error.code) {
+    case "INVALID_DECIMAL":
+      return `${field}必须是最多 8 位小数的非负数字。`;
+    case "AMOUNT_ZERO":
+      return "金额必须大于零。";
+    case "AMOUNT_TOO_LARGE":
+      return "金额超过此计算器支持的上限。";
+    case "PERCENTAGE_TOO_HIGH":
+      return "每项百分比费用必须小于或等于 100%。";
+    default:
+      return text.calculationFailed;
+  }
 }
 
 function render() {
@@ -95,19 +164,19 @@ function render() {
 
     result.classList.toggle("result--warning", calculation.insufficientFunds);
     error.textContent = calculation.insufficientFunds
-      ? "Modeled fees meet or exceed the amount. Check the inputs or route."
+      ? text.insufficientFunds
       : "";
     error.hidden = !calculation.insufficientFunds;
 
     latestSummary = [
-      `Transfer amount: ${formatUnits(calculation.amountUnits)} ${unit}`,
-      `Net received: ${net} ${unit}`,
-      `Total modeled cost: ${total} ${unit}`,
-      `Effective cost: ${rate}%`,
-      `Cost per 1,000: ${thousandCost} ${unit}`,
+      `${text.summaryLabels.amount}: ${formatUnits(calculation.amountUnits)} ${unit}`,
+      `${text.summaryLabels.net}: ${net} ${unit}`,
+      `${text.summaryLabels.total}: ${total} ${unit}`,
+      `${text.summaryLabels.effective}: ${rate}%`,
+      `${text.summaryLabels.perThousand}: ${thousandCost} ${unit}`,
     ].join("\n");
   } catch (calculationError) {
-    error.textContent = calculationError.message;
+    error.textContent = localizedErrorMessage(calculationError);
     error.hidden = false;
     result.classList.add("result--warning");
     latestSummary = "";
@@ -142,17 +211,17 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
 
 copyButton.addEventListener("click", async () => {
   if (!latestSummary) {
-    copyButton.textContent = "Fix inputs first";
+    copyButton.textContent = text.fixInputsFirst;
     return;
   }
   try {
     await navigator.clipboard.writeText(latestSummary);
-    copyButton.textContent = "Copied";
+    copyButton.textContent = text.copied;
     window.setTimeout(() => {
-      copyButton.textContent = "Copy result";
+      copyButton.textContent = text.copyResult;
     }, 1600);
   } catch {
-    copyButton.textContent = "Copy unavailable";
+    copyButton.textContent = text.copyUnavailable;
   }
 });
 

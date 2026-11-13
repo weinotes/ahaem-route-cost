@@ -142,6 +142,28 @@ footer {
   font-weight: 700;
 }
 
+.header-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.language-switch {
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.language-switch:hover {
+  border-color: var(--ink);
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(460px, 1.18fr);
@@ -187,6 +209,21 @@ h1 {
 h2 {
   font-size: clamp(32px, 4vw, 52px);
   font-weight: 700;
+}
+
+html[lang^="zh"] h1,
+html[lang^="zh"] h2 {
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+html[lang^="zh"] .eyebrow,
+html[lang^="zh"] .result-grid span,
+html[lang^="zh"] .breakdown span,
+html[lang^="zh"] .next-links span,
+html[lang^="zh"] .formula span {
+  letter-spacing: 0.04em;
+  text-transform: none;
 }
 
 .lede {
@@ -502,6 +539,23 @@ legend {
   overflow-wrap: anywhere;
 }
 
+.explain-copy h3 {
+  margin: 30px 0 10px;
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.use-cases {
+  display: grid;
+  gap: 9px;
+  padding-left: 20px;
+}
+
+.use-cases strong {
+  color: var(--ink);
+}
+
 details {
   padding: 18px 0;
   border-top: 1px solid var(--line);
@@ -624,6 +678,10 @@ footer p {
   .brand small,
   .header-link {
     display: none;
+  }
+
+  .header-actions {
+    gap: 8px;
   }
 
   h1 {

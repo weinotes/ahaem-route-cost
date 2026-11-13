@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>加密货币转账成本计算器｜AHAEM 开放工具</title>
+    <meta
+      name="description"
+      content="计算加密资产转账的固定费用、百分比费用、实际到账金额与有效成本。无需账户或钱包连接，所有计算均在浏览器本地完成。"
+    >
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#f2f0e8">
+    <link rel="canonical" href="__SITE_URL__zh-CN/">
+    <link rel="alternate" hreflang="en" href="__SITE_URL__">
+    <link rel="alternate" hreflang="zh-CN" href="__SITE_URL__zh-CN/">
+    <link rel="alternate" hreflang="x-default" href="__SITE_URL__">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="stylesheet" href="../styles.css">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AHAEM 开放工具">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en">
+    <meta property="og:title" content="加密货币转账成本计算器">
+    <meta
+      property="og:description"
+      content="看清固定费用、百分比费用和路线成本之后，最终实际到账多少。"
+    >
+    <meta property="og:url" content="__SITE_URL__zh-CN/">
+    <meta property="og:image" content="__SITE_URL__og-cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="加密货币转账成本计算器">
+    <meta
+      name="twitter:description"
+      content="看清固定费用、百分比费用和路线成本之后，最终实际到账多少。"
+    >
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "AHAEM",
+            "url": "https://www.ahaem.com/",
+            "sameAs": [
+              "https://x.com/daveywongpro",
+              "https://t.me/daveywongpro"
+            ]
+          },
+          {
+            "@type": "WebApplication",
+            "name": "加密货币转账成本计算器",
+            "url": "__SITE_URL__zh-CN/",
+            "description": "计算固定费用、百分比费用与实际到账金额的开源加密资产转账成本计算器。",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "inLanguage": "zh-CN",
+            "isAccessibleForFree": true,
+            "browserRequirements": "需要启用 JavaScript",
+            "publisher": {
+              "@type": "Organization",
+              "name": "AHAEM",
+              "url": "https://www.ahaem.com/"
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#calculator">跳到计算器</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="AHAEM 开放工具首页">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>
+          <strong>AHAEM 开放工具</strong>
+          <small>假设清楚的免费计算器</small>
+        </span>
+      </a>
+      <nav class="header-actions" aria-label="语言与服务">
+        <a class="language-switch" href="../" lang="en" hreflang="en">
+          English
+        </a>
+        <a
+          class="header-link"
+          href="https://www.ahaem.com/tools/route-cost/"
+          referrerpolicy="origin"
+        >
+          完整路线规划 <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">转账成本 / 开源 / 无需账户</p>
+          <h1>转账前，先看清最终到账金额。</h1>
+          <p class="lede">
+            填入固定费用和百分比成本，估算实际到账金额。所有计算都在你的浏览器中完成。
+          </p>
+          <ul class="trust-list" aria-label="工具原则">
+            <li>不连接钱包</li>
+            <li>不使用 Cookie 或追踪</li>
+            <li>Apache-2.0 开源</li>
+          </ul>
+          <div class="preset-row" aria-label="示例场景">
+            <span>试试示例：</span>
+            <button type="button" data-preset="exchange">交易所提现</button>
+            <button type="button" data-preset="bridge">跨链桥路线</button>
+          </div>
+        </div>
+
+        <section class="calculator-card" id="calculator" aria-labelledby="calculator-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">估算</p>
+              <h2 id="calculator-title">转账成本</h2>
+            </div>
+            <output class="cost-badge" id="effective-cost" aria-live="polite">0%</output>
+          </div>
+
+          <form id="route-cost-form">
+            <div class="amount-row">
+              <label class="field field--amount">
+                <span>转出金额</span>
+                <input
+                  id="amount"
+                  name="amount"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="0.00000001"
+                  value="1000"
+                  required
+                >
+              </label>
+              <label class="field field--unit">
+                <span>资产 / 单位</span>
+                <input
+                  id="asset-unit"
+                  name="asset-unit"
+                  type="text"
+                  maxlength="12"
+                  value="USDT"
+                  autocomplete="off"
+                >
+              </label>
+            </div>
+
+            <fieldset>
+              <legend>固定费用</legend>
+              <p class="group-help">与转出金额使用同一单位。</p>
+              <div class="field-grid">
+                <label class="field">
+                  <span>提现费</span>
+                  <input id="fixed-withdrawal" type="number" inputmode="decimal" min="0" step="0.00000001" value="1">
+                </label>
+                <label class="field">
+                  <span>网络费</span>
+                  <input id="fixed-network" type="number" inputmode="decimal" min="0" step="0.00000001" value="0.5">
+                </label>
+                <label class="field">
+                  <span>其他固定费用</span>
+                  <input id="fixed-other" type="number" inputmode="decimal" min="0" step="0.00000001" value="0">
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>百分比费用</legend>
+              <p class="group-help">每项百分比均按转出金额计算。</p>
+              <div class="field-grid">
+                <label class="field">
+                  <span>平台费</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-platform" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0.1">
+                    <b>%</b>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>兑换费</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-conversion" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0">
+                    <b>%</b>
+                  </span>
+                </label>
+                <label class="field">
+                  <span>路线 / 滑点</span>
+                  <span class="input-with-suffix">
+                    <input id="percent-route" type="number" inputmode="decimal" min="0" max="100" step="0.000001" value="0.2">
+                    <b>%</b>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button class="button button--primary" type="submit">计算转账结果</button>
+          </form>
+        </section>
+      </section>
+
+      <section class="result-band" id="result" aria-labelledby="result-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">模拟结果</p>
+            <h2 id="result-title">最终到账</h2>
+          </div>
+          <button class="button button--quiet" id="copy-summary" type="button">复制结果</button>
+        </div>
+        <div class="result-grid">
+          <article class="result-primary">
+            <span>净到账</span>
+            <strong id="net-received" aria-live="polite">0 USDT</strong>
+            <p>转出金额减去固定费用与百分比费用。</p>
+          </article>
+          <article>
+            <span>总成本</span>
+            <strong id="total-cost">0 USDT</strong>
+          </article>
+          <article>
+            <span>每转出 1,000 单位的成本</span>
+            <strong id="cost-per-thousand">0 USDT</strong>
+          </article>
+        </div>
+        <div class="breakdown" aria-label="费用明细">
+          <div><span>固定费用</span><strong id="fixed-breakdown">0 USDT</strong></div>
+          <div><span>百分比费用</span><strong id="percentage-breakdown">0 USDT</strong></div>
+        </div>
+      </section>
+
+      <section class="explain">
+        <div>
+          <p class="eyebrow">计算方法</p>
+          <h2>模型简洁，限制明确。</h2>
+        </div>
+        <div class="explain-copy">
+          <p>
+            固定费用只扣除一次。百分比费用按原始转出金额计算，并使用精确整数运算，
+            避免浮点误差影响金额结果。
+          </p>
+          <div class="formula" aria-label="计算公式">
+            <span>净到账</span>
+            <code>转出金额 − 固定费用 − 转出金额 × 百分比费用</code>
+          </div>
+          <h3>常见核对场景</h3>
+          <ul class="use-cases">
+            <li>
+              <strong>交易所提现：</strong>同时核对固定提现费与百分比平台费。
+            </li>
+            <li>
+              <strong>跨链桥或 DEX 路线：</strong>把网络费、兑换费和滑点一起计入。
+            </li>
+            <li>
+              <strong>小额转账：</strong>判断固定费用是否让有效成本占比明显升高。
+            </li>
+          </ul>
+          <details>
+            <summary>本计算器不纳入以下因素</summary>
+            <ul>
+              <li>税费、价格波动、质押收益或投资收益。</li>
+              <li>以转出资产以外的资产收取的费用。</li>
+              <li>最低提现额、网络拥堵或对手方风险。</li>
+              <li>特定地区或账户是否可以使用某条路线。</li>
+            </ul>
+          </details>
+        </div>
+      </section>
+
+      <section class="next-step">
+        <div>
+          <p class="eyebrow">需要规划多步转账？</p>
+          <h2>从估算走向路线决策。</h2>
+          <p>
+            单一计算器无法反映网络可用性、钱包限制或交易所规则。当路线会影响资金最终去向时，
+            请使用完整的路线规划服务。
+          </p>
+        </div>
+        <div class="next-links">
+          <a href="https://www.ahaem.com/tools/route-cost/" referrerpolicy="origin">
+            <span>比较完整路线</span>
+            <strong>AHAEM 路线规划器 <b aria-hidden="true">↗</b></strong>
+            <small>费用、网络、钱包与数据缺失状态。</small>
+          </a>
+          <a href="https://www.cexah.com/tools/trading-cost-comparison" referrerpolicy="origin">
+            <span>研究交易所成本</span>
+            <strong>CEXAH 交易成本比较 <b aria-hidden="true">↗</b></strong>
+            <small>交易所费用、衍生品与交易成本研究。</small>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        由 <a href="https://www.ahaem.com/" referrerpolicy="origin">AHAEM</a>
+        构建的开源公共工具。计算器不包含联盟营销链接，页面不会向服务器发送你输入的数据。
+        本工具仅用于信息参考，不构成财务建议。
+      </p>
+      <p>
+        <a href="https://github.com/weinotes/ahaem-route-cost">源代码</a>
+        · Apache-2.0 · 更新于 <time datetime="2026-11-14">2026 年 11 月 14 日</time>
+      </p>
+    </footer>
+
+    <noscript>
+      <p class="noscript">计算器需要启用 JavaScript；页面不会发送任何输入值。</p>
+    </noscript>
+    <script type="module" src="../app.js"></script>
+  </body>
+</html>

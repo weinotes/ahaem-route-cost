@@ -3,6 +3,19 @@
 All notable changes follow [Keep a Changelog](https://keepachangelog.com/) and
 the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Simplified Chinese calculator page at `zh-CN/`;
+- reciprocal `hreflang` metadata and bilingual sitemap alternates;
+- localized validation, warning and copied-result messages.
+
+### Changed
+
+- the shared calculator UI now selects English or Chinese text from the page
+  language without duplicating calculation logic.
+
 ## [0.1.0] - 2026-11-14
 
 ### Added

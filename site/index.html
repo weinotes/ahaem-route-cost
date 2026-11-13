@@ -11,11 +11,16 @@
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#f2f0e8">
     <link rel="canonical" href="__SITE_URL__">
+    <link rel="alternate" hreflang="en" href="__SITE_URL__">
+    <link rel="alternate" hreflang="zh-CN" href="__SITE_URL__zh-CN/">
+    <link rel="alternate" hreflang="x-default" href="__SITE_URL__">
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="./site.webmanifest">
     <link rel="stylesheet" href="./styles.css">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AHAEM Open Tools">
+    <meta property="og:locale" content="en">
+    <meta property="og:locale:alternate" content="zh_CN">
     <meta property="og:title" content="Crypto Transfer Cost Calculator">
     <meta
       property="og:description"
@@ -24,6 +29,11 @@
     <meta property="og:url" content="__SITE_URL__">
     <meta property="og:image" content="__SITE_URL__og-cover.png">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Crypto Transfer Cost Calculator">
+    <meta
+      name="twitter:description"
+      content="See what actually arrives after fixed fees, percentage fees and route costs."
+    >
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -44,6 +54,7 @@
             "description": "An open-source calculator for fixed, percentage and effective crypto transfer costs.",
             "applicationCategory": "FinanceApplication",
             "operatingSystem": "Any",
+            "inLanguage": "en",
             "isAccessibleForFree": true,
             "browserRequirements": "Requires JavaScript",
             "publisher": {
@@ -66,13 +77,18 @@
           <small>Free calculators with visible assumptions</small>
         </span>
       </a>
-      <a
-        class="header-link"
-        href="https://www.ahaem.com/tools/route-cost/"
-        referrerpolicy="origin"
-      >
-        Full route planner <span aria-hidden="true">↗</span>
-      </a>
+      <nav class="header-actions" aria-label="Language and services">
+        <a class="language-switch" href="./zh-CN/" lang="zh-CN" hreflang="zh-CN">
+          中文
+        </a>
+        <a
+          class="header-link"
+          href="https://www.ahaem.com/tools/route-cost/"
+          referrerpolicy="origin"
+        >
+          Full route planner <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
     </header>
 
     <main>
@@ -230,6 +246,21 @@
             <span>Net received</span>
             <code>amount − fixed fees − amount × percentage fees</code>
           </div>
+          <h3>Typical checks</h3>
+          <ul class="use-cases">
+            <li>
+              <strong>Exchange withdrawal:</strong> compare a fixed withdrawal
+              fee with a percentage-based platform charge.
+            </li>
+            <li>
+              <strong>Bridge or DEX route:</strong> include network, conversion
+              and slippage costs before sending.
+            </li>
+            <li>
+              <strong>Small transfers:</strong> see whether fixed fees make the
+              effective cost disproportionately high.
+            </li>
+          </ul>
           <details>
             <summary>What this calculator does not model</summary>
             <ul>
@@ -271,7 +302,8 @@
       <p>
         Built by <a href="https://www.ahaem.com/" referrerpolicy="origin">AHAEM</a>
         as an open-source public tool. The calculator contains no affiliate links
-        and sends no entered values to a server.
+        and sends no entered values to a server. It is informational software,
+        not financial advice.
       </p>
       <p>
         <a href="https://github.com/weinotes/ahaem-route-cost">Source code</a>

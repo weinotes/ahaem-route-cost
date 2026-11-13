@@ -26,30 +26,52 @@ function normalizedSiteUrl(raw) {
 }
 
 const siteUrl = normalizedSiteUrl(process.env.SITE_URL);
+const chineseSiteUrl = new URL("zh-CN/", siteUrl).toString();
 const lastModified = process.env.SITE_LASTMOD || "2026-11-14";
 
 await rm(outputDirectory, { recursive: true, force: true });
 await mkdir(outputDirectory, { recursive: true });
 await cp(sourceDirectory, outputDirectory, { recursive: true });
 
-const indexPath = join(outputDirectory, "index.html");
-const indexHtml = (await readFile(indexPath, "utf8")).replaceAll(
-  "__SITE_URL__",
-  siteUrl,
-);
-await writeFile(indexPath, indexHtml);
+for (const pagePath of ["index.html", "zh-CN/index.html"]) {
+  const pageAbsolutePath = join(outputDirectory, pagePath);
+  const pageHtml = (await readFile(pageAbsolutePath, "utf8")).replaceAll(
+    "__SITE_URL__",
+    siteUrl,
+  );
+  await writeFile(pageAbsolutePath, pageHtml);
+}
+
+function escapeXml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function sitemapEntry(loc) {
+  return [
+    "  <url>",
+    `    <loc>${escapeXml(loc)}</loc>`,
+    `    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(siteUrl)}"/>`,
+    `    <xhtml:link rel="alternate" hreflang="zh-CN" href="${escapeXml(chineseSiteUrl)}"/>`,
+    `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(siteUrl)}"/>`,
+    `    <lastmod>${lastModified}</lastmod>`,
+    "    <changefreq>monthly</changefreq>",
+    "    <priority>1.0</priority>",
+    "  </url>",
+  ];
+}
 
 await writeFile(
   join(outputDirectory, "sitemap.xml"),
   [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    "  <url>",
-    `    <loc>${siteUrl}</loc>`,
-    `    <lastmod>${lastModified}</lastmod>`,
-    "    <changefreq>monthly</changefreq>",
-    "    <priority>1.0</priority>",
-    "  </url>",
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+    ...sitemapEntry(siteUrl),
+    ...sitemapEntry(chineseSiteUrl),
     "</urlset>",
     "",
   ].join("\n"),
@@ -66,4 +88,4 @@ await writeFile(
   ].join("\n"),
 );
 
-console.log(`Built ${outputDirectory} for ${siteUrl}`);
+console.log(`Built ${outputDirectory} for ${siteUrl} (en, zh-CN)`);

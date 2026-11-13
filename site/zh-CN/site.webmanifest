@@ -1,0 +1,16 @@
+{
+  "name": "AHAEM 转账成本计算器",
+  "short_name": "转账成本",
+  "description": "计算加密资产转账的真实固定成本、百分比成本与最终到账金额。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f2f0e8",
+  "theme_color": "#f2f0e8",
+  "icons": [
+    {
+      "src": "../favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

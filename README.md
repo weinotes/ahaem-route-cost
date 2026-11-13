@@ -4,7 +4,10 @@ An independent, open-source calculator for the fixed and percentage costs of
 moving crypto. It runs entirely in the browser: no account, wallet connection,
 cookies or server-side input processing.
 
-Live page: <https://weinotes.github.io/ahaem-route-cost/>
+Pages after the next deployment:
+
+- English: <https://weinotes.github.io/ahaem-route-cost/>
+- Simplified Chinese: <https://weinotes.github.io/ahaem-route-cost/zh-CN/>
 
 The tool is built by AHAEM and links to two relevant next steps:
 
@@ -48,13 +51,24 @@ For a custom origin:
 SITE_URL=https://example.com/tool/ npm run build
 ```
 
+The Chinese page is generated at `zh-CN/` under the configured origin. The
+build adds reciprocal `hreflang` metadata and bilingual sitemap alternates.
+
+For a Gitee Pages mirror, build with the Gitee Pages root:
+
+```bash
+SITE_URL=https://<user>.gitee.io/<repository>/ npm run check
+```
+
 ## Quality gates
 
 `npm run check` runs unit tests, creates the production build and validates:
 
-- one H1 and canonical metadata;
+- one H1 and self-canonical metadata for each locale;
+- reciprocal `en`, `zh-CN` and `x-default` hreflang links;
+- a CJK-specific minimum Han-character gate in addition to word counts;
 - JSON-LD parseability;
-- sitemap and robots consistency;
+- bilingual sitemap and robots consistency;
 - required static assets;
 - absence of analytics and affiliate parameters;
 - a small deployment size budget.

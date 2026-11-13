@@ -8,20 +8,29 @@
   "sitemap": "sitemap.xml",
   "robots": "robots.txt",
   "default_locale": "en",
-  "locales": ["en"],
+  "locales": ["en", "zh-CN"],
   "max_urls": 10,
   "hreflang": {
-    "enabled": false,
-    "require_x_default": false
+    "enabled": true,
+    "require_x_default": true
   },
   "ignore_url_regex": [],
   "page_rules": [
     {
       "name": "transfer_cost_calculator",
-      "regex": ["^/ahaem-route-cost/$"],
+      "regex": ["^/(?:ahaem-route-cost/)?$"],
       "indexable": true,
       "schema_any": ["WebApplication"],
       "min_visible_words": 180,
+      "require_h1": 1,
+      "require_description": true
+    },
+    {
+      "name": "transfer_cost_calculator_zh_cn",
+      "regex": ["^/(?:ahaem-route-cost/)?zh-CN/$"],
+      "indexable": true,
+      "schema_any": ["WebApplication"],
+      "min_visible_words": 100,
       "require_h1": 1,
       "require_description": true
     }
@@ -30,6 +39,9 @@
   "quality_gates": {
     "require_source_dates": [],
     "require_author": [],
-    "allow_faq_schema_only_with_visible_faq": true
+    "allow_faq_schema_only_with_visible_faq": true,
+    "min_han_characters": {
+      "zh-CN": 600
+    }
   }
 }

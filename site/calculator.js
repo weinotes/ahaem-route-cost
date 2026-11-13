@@ -3,11 +3,29 @@ const PERCENT_SCALE = 1_000_000n;
 const MAX_UNITS = 1_000_000_000_000_000_000_000n;
 const DECIMAL_PATTERN = /^(?:0|[1-9]\d*)(?:\.\d{1,8})?$/;
 const PERCENT_PATTERN = /^(?:0|[1-9]\d*)(?:\.\d{1,6})?$/;
+const ERROR_CODES = Object.freeze({
+  INVALID_DECIMAL: "INVALID_DECIMAL",
+  AMOUNT_ZERO: "AMOUNT_ZERO",
+  AMOUNT_TOO_LARGE: "AMOUNT_TOO_LARGE",
+  PERCENTAGE_TOO_HIGH: "PERCENTAGE_TOO_HIGH",
+});
+
+function validationError(code, message, field) {
+  const error = new Error(message);
+  error.name = "CalculationError";
+  error.code = code;
+  if (field) error.field = field;
+  return error;
+}
 
 function parseScaledValue(raw, pattern, scale, label) {
   const text = String(raw ?? "").trim();
   if (!pattern.test(text)) {
-    throw new Error(`${label} must be a non-negative decimal with at most 8 places.`);
+    throw validationError(
+      ERROR_CODES.INVALID_DECIMAL,
+      `${label} must be a non-negative decimal with at most 8 places.`,
+      label,
+    );
   }
 
   const [whole, fraction = ""] = text.split(".");
@@ -33,10 +51,18 @@ export function calculateTransferCost({
 }) {
   const amountUnits = parseScaledValue(amount, DECIMAL_PATTERN, UNIT_SCALE, "Amount");
   if (amountUnits === 0n) {
-    throw new Error("Amount must be greater than zero.");
+    throw validationError(
+      ERROR_CODES.AMOUNT_ZERO,
+      "Amount must be greater than zero.",
+      "Amount",
+    );
   }
   if (amountUnits > MAX_UNITS) {
-    throw new Error("Amount is too large for this calculator.");
+    throw validationError(
+      ERROR_CODES.AMOUNT_TOO_LARGE,
+      "Amount is too large for this calculator.",
+      "Amount",
+    );
   }
 
   const fixedFeeUnits = parseFeeMap(
@@ -60,7 +86,11 @@ export function calculateTransferCost({
     },
   );
   if (percentageRateUnits > 100n * PERCENT_SCALE) {
-    throw new Error("Each percentage fee must be 100% or less.");
+    throw validationError(
+      ERROR_CODES.PERCENTAGE_TOO_HIGH,
+      "Each percentage fee must be 100% or less.",
+      "Percentage fee",
+    );
   }
 
   const percentageFeeUnits =

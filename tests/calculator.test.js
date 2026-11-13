@@ -54,7 +54,11 @@ test("flags a route whose fees use the full amount", () => {
 test("rejects missing, negative and malformed amounts", () => {
   assert.throws(
     () => calculateTransferCost({ amount: "" }),
-    /Amount must be a non-negative decimal/,
+    (error) => {
+      assert.equal(error.code, "INVALID_DECIMAL");
+      assert.equal(error.field, "Amount");
+      return /Amount must be a non-negative decimal/.test(error.message);
+    },
   );
   assert.throws(
     () => calculateTransferCost({ amount: "-1" }),
@@ -73,7 +77,20 @@ test("rejects an individual percentage fee above 100 percent", () => {
         amount: "100",
         percentageFees: { platform: "100.000001" },
       }),
-    /100% or less/,
+    (error) => {
+      assert.equal(error.code, "PERCENTAGE_TOO_HIGH");
+      return /100% or less/.test(error.message);
+    },
+  );
+});
+
+test("exposes a stable error code when the amount is zero", () => {
+  assert.throws(
+    () => calculateTransferCost({ amount: "0" }),
+    (error) => {
+      assert.equal(error.code, "AMOUNT_ZERO");
+      return /greater than zero/.test(error.message);
+    },
   );
 });
 
