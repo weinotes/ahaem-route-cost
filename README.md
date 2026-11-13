@@ -73,17 +73,17 @@ SITE_URL=https://<user>.gitee.io/<repository>/ npm run check
 - absence of analytics and affiliate parameters;
 - a small deployment size budget.
 
-The same `npm run check` command is used before publishing. The current
-branch-based Pages release publishes only the generated `dist/` directory to
-the `gh-pages` branch:
+The same `npm run check` command is used before publishing. Pushes to `main`
+automatically build and deploy the generated `dist/` directory through
+`.github/workflows/pages.yml`.
+
+The legacy branch publisher remains available for local fallback:
 
 ```bash
 npm run deploy:pages
 ```
 
-Pinned GitHub Actions workflow templates are included under
-`docs/automation/` for maintainers whose GitHub token has the `workflow` scope.
-They should replace the branch publisher after review.
+Additional pinned GitHub Actions templates remain under `docs/automation/`.
 
 ## Structure
 

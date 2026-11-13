@@ -9,7 +9,8 @@ the project uses [Semantic Versioning](https://semver.org/).
 
 - Simplified Chinese calculator page at `zh-CN/`;
 - reciprocal `hreflang` metadata and bilingual sitemap alternates;
-- localized validation, warning and copied-result messages.
+- localized validation, warning and copied-result messages;
+- automatic GitHub Pages deployment after pushes to `main`.
 
 ### Changed
 
