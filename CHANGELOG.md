@@ -12,7 +12,8 @@ the project uses [Semantic Versioning](https://semver.org/).
 - localized validation, warning and copied-result messages;
 - automatic GitHub Pages deployment after pushes to `main`;
 - Vercel production deployment with GitHub auto-deploy and a self-canonical
-  `ahaem-route-cost.vercel.app` origin.
+  `ahaem-route-cost.vercel.app` origin;
+- GitLab Pages deployment through the default-branch pipeline.
 
 ### Changed
 

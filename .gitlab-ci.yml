@@ -1,0 +1,13 @@
+pages:
+  image: node:24
+  timeout: 10m
+  interruptible: true
+  script:
+    - SITE_URL="${CI_PAGES_URL%/}/" npm run check
+    - mkdir -p public
+    - cp -R dist/. public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

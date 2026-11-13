@@ -10,6 +10,8 @@ Pages after the next deployment:
 - Simplified Chinese: <https://weinotes.github.io/ahaem-route-cost/zh-CN/>
 - Vercel English: <https://ahaem-route-cost.vercel.app/>
 - Vercel Simplified Chinese: <https://ahaem-route-cost.vercel.app/zh-CN/>
+- GitLab English: <https://wgwcko.gitlab.io/ahaem-route-cost/>
+- GitLab Simplified Chinese: <https://wgwcko.gitlab.io/ahaem-route-cost/zh-CN/>
 
 The tool is built by AHAEM and links to two relevant next steps:
 
@@ -95,6 +97,9 @@ Output directory: dist
 Node.js: 24.x
 SITE_URL: https://ahaem-route-cost.vercel.app/
 ```
+
+GitLab Pages is built from `.gitlab-ci.yml` on the default branch. It publishes
+the same bilingual `dist/` output with `SITE_URL` resolved from `CI_PAGES_URL`.
 
 ## Structure
 
