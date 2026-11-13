@@ -1,0 +1,15 @@
+{
+  "auditVersion": 1,
+  "profile": "/Users/daveywong/projects/ahaem/ahaem-route-cost/docs/seo-geo-profile.json",
+  "baseUrl": "https://weinotes.github.io/ahaem-route-cost/",
+  "startedAt": "2026-11-13T18:42:56Z",
+  "elapsedSeconds": 1.41,
+  "urlsDiscovered": 1,
+  "urlsAudited": 1,
+  "severityCounts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0
+  },
+  "findings": []
+}

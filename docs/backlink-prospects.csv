@@ -12,6 +12,7 @@ priority,channel,target_url_or_search,audience,status,owner,last_contacted,next_
 2,Indie Hackers,https://www.indiehackers.com/,Independent products,not-submitted,,,,"Discuss implementation and evidence"
 2,Relevant crypto subreddit,Research current community rules,Crypto users,manual-review,,,,"No link dropping; answer a specific problem"
 2,Journalist request platform,Review current free-tier platforms,Personal finance and crypto,manual-review,,,,"Answer fee and transfer questions"
+2,Crypto Tools Directory,https://github.com/CryptoToolsDirectory/Awesome-Crypto-Tools-Directory,Crypto tools,manual-review,,,,"Verified directory listing first; repository license is NOASSERTION and submission terms require review"
 3,GitHub topic,https://github.com/topics/crypto-tools,Developers,not-submitted,,,,"Topics are discovery, not guaranteed links"
 3,Developer newsletter,Research relevant open-source newsletters,Developers,prospect,,,,"Lead with open-source calculator"
 3,Broken/resource link,Search fee and calculator resource pages,Existing resource pages,prospect,,,,"One correction or suggestion per site"
